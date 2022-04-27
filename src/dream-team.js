@@ -15,12 +15,15 @@ const { NotImplementedError } = require('../extensions/index.js');
  */
  let onlyNames = [];
  function createDreamTeam(members) {
+   if (!Array.isArray(members)) return false;
    onlyNames = members.filter(function(name) {
-     return (typeof(name) == 'string');
+     return ((name !==' ') && (typeof(name) == 'string'));
    });
    if (onlyNames == false) return false;
    let firstLetters = onlyNames.map(function(name) {
-     return name[0].toUpperCase();
+     let i = 0;
+     while (name[i] == ' ') i++;
+     return name[i].toUpperCase();
    });
    return firstLetters.sort().join('');
  }

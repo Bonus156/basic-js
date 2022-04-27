@@ -14,17 +14,18 @@ const { NotImplementedError } = require('../extensions/index.js');
  * ]) => 3`
  *
  */
- let count = 0;
- let catsOnly = [];
- function countCats(backyard) {
-  backyard.forEach(function(item) {   
-    catsOnly = item.filter(function(cat) {
-    return cat == '^^';   
-   }); 
-   count += catsOnly.length;   
- });
-   return count;
- }
+ 
+function countCats(backyard) {
+  let count = 0;
+let catsOnly = [];
+ backyard.forEach(function(item) {   
+   catsOnly = item.filter(function(cat) {
+   return cat == '^^';   
+  }); 
+  count += catsOnly.length;   
+});
+  return count;
+}
 
 module.exports = {
   countCats

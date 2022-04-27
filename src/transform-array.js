@@ -13,10 +13,42 @@ const { NotImplementedError } = require('../extensions/index.js');
  * transform([1, 2, 3, '--discard-prev', 4, 5]) => [1, 2, 4, 5]
  * 
  */
-function transform(/* arr */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function transform(array) {
+  let newArray =[];
+  const MSG = '\'arr\' parameter must be an instance of the Array!';
+  if (!Array.isArray(array)) throw new Error('\'arr\' parameter must be an instance of the Array!'); 
+  else {
+  array.forEach(function(item, index, arr) {
+    if ((item === '--double-next') && (index === (arr.length - 1))) {
+
+    } else if ((item === '--double-next')) {
+      newArray.push(arr[index + 1]);
+    } else if ((index === 0) && ((item === '--discard-prev') || (item === '--double-prev'))) {
+
+    } else if ((item === '--discard-prev') && (index !== 0)) {
+      newArray.pop();
+    } else if ((item === '--double-prev')) {
+      newArray.push(arr[index - 1]);
+      if ((arr[index-2] === '--discard-next')) {
+      newArray.pop();
+      newArray.pop();
+      }
+    } else if (item === '--discard-next') {
+      
+    } else newArray.push(item);
+  });
+  return newArray;
+  }
 }
+
+// console.log(transform([1, 2, 3, '--discard-next', 1337, '--double-prev', 4, 5]))
+// [1, 2, 3, '--discard-next', 1337, '--discard-prev', 4, 5]
+//[1, 2, 3, '--double-next', 1337, '--discard-prev', 4, 5]
+//[1, 2, 3, '--double-next', 1337, '--double-prev', 4, 5]
+//[1, 2, 3, '--discard-next', 1337, '--double-prev', 4, 5]
+                // ['--double-prev', 1, 2, 3],
+                // [1, 2, 3, '--double-next'],
+                // [1, 2, 3, '--discard-next']
 
 module.exports = {
   transform
