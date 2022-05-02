@@ -14,7 +14,7 @@ function getEmailDomain(email) {
   return email.slice(email.lastIndexOf('@') + 1);
 }
 
- console.log(getEmailDomain('prettyandsimple@example.com'));
+//  console.log(getEmailDomain('prettyandsimple@example.com'));
 
 module.exports = {
   getEmailDomain
