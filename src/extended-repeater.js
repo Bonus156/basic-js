@@ -19,12 +19,12 @@ function repeater(str, options) {
   str = `${str}`;
   if (!options.repeatTimes) options.repeatTimes = 1;
   if (!options.additionRepeatTimes) options.additionRepeatTimes = 1;
-  if (!options.addition && typeof options.addition !== 'boolean' && options.addition !== null) options.addition = '';
+  if (options.addition === undefined) options.addition = '';
   options.addition = `${options.addition}`;
   if (!options.additionSeparator) options.additionSeparator = '|';
   if (!options.separator) options.separator = '+';  
-  let subString = (`${options.addition}` + options.additionSeparator).repeat(options.additionRepeatTimes - 1) + `${options.addition}`;  
-  let string = (`${str}` + subString + options.separator).repeat(options.repeatTimes - 1) + `${str}` + subString;
+  let subString = (options.addition + options.additionSeparator).repeat(options.additionRepeatTimes - 1) + options.addition;  
+  let string = (str + subString + options.separator).repeat(options.repeatTimes - 1) + str + subString;
   return string;
 };
 

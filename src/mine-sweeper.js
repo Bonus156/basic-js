@@ -23,9 +23,61 @@ const { NotImplementedError } = require('../extensions/index.js');
  *  [1, 1, 1]
  * ]
  */
-function minesweeper(/* matrix */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function minesweeper(matrix) {
+  let area = [];  
+  for (let i = 0; i < matrix.length; i++) {
+    area.push([]);
+    for (let j = 0; j < matrix[i].length; j++) {      
+      area[i][j] = 0;
+    }
+  }
+  for (let i = 1; i < matrix.length-1; i++) {    
+    for (let j = 0; j <= matrix[i].length; j++) {
+      if (matrix[i][j]) {        
+        if (j>0) {
+          area[i][j-1]++;
+          area[i-1][j-1]++;
+          area[i+1][j-1]++;
+        }        
+        if (j<=matrix[i].length-1) {
+          area[i][j+1]++;
+          area[i-1][j+1]++;
+          area[i+1][j+1]++;
+        }               
+        area[i-1][j]++;                
+        area[i+1][j]++;        
+      } 
+    }    
+  }
+  if (matrix.length > 0) {
+    for (let j = 0; j < matrix[0].length; j++) {
+      if (matrix[0][j]) {
+        if (j>0) {
+          area[0][j-1]++;
+          area[1][j-1]++;
+        }
+        if (j < matrix.length-1) {
+          area[0][j+1]++;
+          area[1][j+1]++;
+        }
+        area[1][j]++;        
+      }
+    }
+  }
+    for (let j = 0; j < matrix[matrix.length-1]; j++) {
+      if (matrix[matrix.length-1][j]) {
+        if (j>0) {
+          area[matrix.length-1][j-1]++;
+          area[matrix.length-2][j-1]++;
+        }
+        if (j < matrix.length-1) {
+          area[matrix.length-1][j+1]++;
+          area[matrix.length-2][j+1]++;
+        }
+        area[matrix.length-2][j]++;        
+      }
+    }    
+  return area;
 }
 
 module.exports = {
