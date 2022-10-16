@@ -22,10 +22,52 @@ const { NotImplementedError } = require('../extensions/index.js');
  * }
  *
  */
-function getDNSStats(/* domains */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
-}
+
+domains = [
+  'code.yandex.ru',
+  'music.yandex.ru',
+  'yandex.ru'
+  ]
+function getDNSStats(domains) {  
+  let obj = {};
+  domains = domains.map((item) => {
+    return '.'+item;
+  });
+  let string = '';
+  while (domains.some(item => item[0] === '.')) {
+    domains = domains.map((item) => {
+      if (!item.includes('*')) {
+        string = item.slice(item.lastIndexOf('.'));
+        // console.log(string); 
+        if (obj[string]) {
+          obj[string]++;
+        } else {
+          obj[string] = 1;
+        }
+      return item.slice(0, item.lastIndexOf('.')) + '*' + item.slice(item.lastIndexOf('.')+1);
+      } else if (item[0] !== '*') {
+        string.includes(item.slice(item.lastIndexOf('.'), item.indexOf('*'))) ? 
+        string.slice(string.lastIndexOf('.')) === item.slice(item.lastIndexOf('.'), item.indexOf('*')) ?
+        // console.log(string) :
+        string = string :
+        string = string.slice(0, string.lastIndexOf('.')) + item.slice(item.lastIndexOf('.'), item.indexOf('*')) :
+        string = string + item.slice(item.lastIndexOf('.'), item.indexOf('*'));
+        // string = '.' + item.slice(item.lastIndexOf('*')+1) + item.slice(item.lastIndexOf('.'), item.indexOf('*'));
+        // console.log(string);      
+      if (obj[string]) {
+        (obj[string]++);
+      } else { obj[string] = 1}
+      return item.slice(0, item.lastIndexOf('.')) + '*' + item.slice(item.lastIndexOf('.')+1);
+      } else return '*';
+    });
+    // console.log(domains);
+    // console.log(obj);
+  }
+  return obj;
+};
+
+// getDNSStats(domains)
+
 
 module.exports = {
   getDNSStats
